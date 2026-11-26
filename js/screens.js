@@ -190,7 +190,7 @@
   }
 
   T.screen({
-    id: '05', act: 1, theme: 'paper', title: 'People already talk to it', time: '0:45', clicks: 3, trans: 'fade',
+    id: '05', act: 1, theme: 'paper', title: 'People already talk to it', time: '0:45', clicks: 3, trans: 'fade', skip: true,  // Elad 26.11: "תוריד בבקשה את השקף הזה"
     html: function (el) {
       return head('Act II · Where people already go', 'People already talk to it') +
         '<div class="sub">Generative AI as a de facto mental-health provider</div>' +
