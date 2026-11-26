@@ -295,6 +295,31 @@
     if (e.clientX < window.innerWidth / 3) prev(); else next();
   });
 
+  /* ----- computer (Elad 26.11: "שבמחשב זה יזוז גם עם חיצים"): the arrow keys already move it; these are clickable
+     arrows at the bottom corners of the window. They show while the mouse moves and hide with the cursor after 3 s,
+     so they are not on screen while he talks with the clicker. Not on touch screens (taps move it there). ----- */
+  (function () {
+    const st = document.createElement('style');
+    st.textContent = '.navarrow{position:fixed;bottom:18px;z-index:60;width:54px;height:54px;border-radius:50%;border:1px solid rgba(38,73,58,.45);' +
+      'background:rgba(242,234,221,.88);color:#26493A;font:600 30px/50px Georgia,serif;text-align:center;cursor:pointer;opacity:.85;' +
+      'transition:opacity .4s;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.12)}.navarrow:hover{opacity:1;background:#F2EADD}' +
+      '#navprev{left:18px}#navnext{right:18px}body.hide-cursor .navarrow{opacity:0;pointer-events:none}' +
+      '@media (hover:none){.navarrow{display:none}}';
+    document.head.appendChild(st);
+    [['navprev', '‹', 'Back', function () { prev(); }], ['navnext', '›', 'Next', function () { next(); }]].forEach(function (a) {
+      const b = document.createElement('button');
+      b.id = a[0]; b.className = 'navarrow'; b.type = 'button'; b.textContent = a[1]; b.setAttribute('aria-label', a[2]);
+      b.addEventListener('click', function (e) {
+        e.stopPropagation(); b.blur();
+        if (overlay.classList.contains('on')) { closeCard(); return; }
+        if (blackEl.classList.contains('on')) { blackEl.classList.remove('on'); return; }
+        if (mapEl.classList.contains('on')) { mapEl.classList.remove('on'); return; }
+        a[3]();
+      });
+      document.body.appendChild(b);
+    });
+  })();
+
   let idleT;
   function wake() { document.body.classList.remove('hide-cursor'); clearTimeout(idleT); idleT = setTimeout(function () { document.body.classList.add('hide-cursor'); }, 3000); }
   document.addEventListener('mousemove', wake);

@@ -264,9 +264,12 @@ body.hide-cursor, body.hide-cursor * { cursor: none !important; }
 #s10 .scrimL { position: absolute; left: 0; top: 0; bottom: 0; width: 1000px; background: linear-gradient(90deg, rgba(242,234,221,1) 0%, rgba(242,234,221,.97) 58%, rgba(242,234,221,0) 100%); opacity: 0; transition: opacity 1.2s; }
 #s10 .scrimL.in { opacity: 1; }
 #s10 .lt { position: absolute; left: 96px; top: 300px; width: 620px; font: 400 32px/1.4 var(--body); color: var(--ink); }
-#s10 .words { position: absolute; left: 96px; top: 540px; width: 620px; }
+#s10 .words { position: absolute; left: 96px; top: 470px; width: 800px; }
+#s10 .words .bk { margin-top: 16px; padding: 10px 18px 12px; border-left: 4px solid var(--gold); background: rgba(255,255,255,.55); font: 400 26px/1.35 var(--body); color: var(--walnut); letter-spacing: .01em; }
+#s10 .words .g.in { transition-delay: 1.1s; }
+#s10 .words .pq.in { transition-delay: 1.8s; }
 #s10 .cite, #s09 .cite { background: rgba(242,234,221,.96); z-index: 6; }
-#s10 .words .q { font: italic 400 38px/1.3 var(--display); color: var(--ink); }
+#s10 .words .q { font: italic 400 34px/1.3 var(--display); color: var(--ink); }
 #s10 .words .q::before { content: ''; display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: var(--rose); margin-right: 14px; vertical-align: 2px; }
 #s10 .words .g { margin-top: 20px; font: 600 24px/1.3 var(--body); color: var(--green); }
 #s10 .words .pq { margin-top: 22px; font: italic 400 27px/1.35 var(--display); color: var(--gold-ink); }
@@ -303,8 +306,7 @@ body.hide-cursor, body.hide-cursor * { cursor: none !important; }
 #s13 .oi.cur { opacity: 1; color: var(--green); font-weight: 700; }
 #s13 .oi.cur i { background: var(--green); color: var(--paper); border-color: var(--green); }
 #s13 .vrule13 { position: absolute; left: 648px; top: 290px; width: 1px; height: 640px; background: rgba(107,78,55,.35); }
-#s13 .ip { position: absolute; left: 700px; top: 280px; width: 1124px; transition: opacity .6s var(--ease), transform .6s var(--ease); }
-#s13 .ip.wide { width: 760px; }
+#s13 .ip { position: absolute; left: 700px; top: 280px; width: 760px; transition: opacity .6s var(--ease), transform .6s var(--ease); }
 #s13 .where { font: 600 16px/1.2 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); }
 #s13 .iname { margin: 10px 0 14px; font: 450 56px/1.08 var(--display); font-variation-settings: 'opsz' 60, 'SOFT' 30; letter-spacing: -0.01em; color: var(--green); }
 #s13 .isent { font: 400 28px/1.38 var(--body); color: var(--ink); }
@@ -320,6 +322,7 @@ body.hide-cursor, body.hide-cursor * { cursor: none !important; }
 #s13 .fear.in .gdef { transform: none; }
 #s13 .dress { position: absolute; right: 96px; top: 300px; width: 340px; height: 340px; border: 1px solid var(--gold); outline: 1px solid var(--gold); outline-offset: 7px; background: url(../assets/img/N2_the_dress_full.jpg) center/cover; opacity: 0; transition: opacity 1s var(--ease); }
 #s13 .dress.in { opacity: 1; }
+#s13 .pic13 { background-size: cover; background-position: center; }
 #s13 .final { position: absolute; left: 700px; right: 96px; top: 440px; font: 600 54px/1.2 var(--display); color: var(--green); }
 
 /* ---------- 14 system ---------- */
@@ -505,3 +508,59 @@ body.hide-cursor, body.hide-cursor * { cursor: none !important; }
 #progress.on.hide12 { opacity: 0; }
 #s12 .pre img { max-height: 722px; }
 #map .it.skipd { opacity: .55; font-style: italic; }
+
+/* ===== 26.11 (Elad): screen 17 "A new capability", screen 18 MENTI emblem + funder, screen 22 "Thank you" ===== */
+#s17 .cap17 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transition: transform 1.2s var(--ease); }
+#s17 .cap17.left { transform: translateX(-190px); }
+#s17 .ring { position: absolute; top: 300px; width: 470px; height: 470px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .9s var(--ease), transform 1.4s var(--ease); }
+#s17 .ring.a { left: 300px; border: 3px solid var(--green); background: rgba(38,73,58,.07); transform: translateX(-160px); }
+#s17 .ring.b { left: 1150px; border: 3px solid var(--gold); background: rgba(168,136,92,.10); transform: translateX(160px); }
+#s17 .ring.in { opacity: 1; transform: none; }
+#s17 .ring.a.meet { transform: translateX(230px); }
+#s17 .ring.b.meet { transform: translateX(-230px); }
+#s17 .ring .ic { width: 170px; height: 170px; margin-top: -20px; }
+#s17 .ring .lab { margin-top: 10px; font: 600 30px/1.18 var(--display); color: var(--green); text-align: center; transition: opacity .6s; }
+#s17 .ring.b .lab { color: var(--walnut); }
+#s17 .ring .fact { margin-top: 10px; max-width: 260px; font: 400 19px/1.3 var(--body); color: var(--walnut); text-align: center; transition: opacity .6s; }
+#s17 .ring > * { transition: transform 1.2s var(--ease), opacity .6s; }
+#s17 .ring.a.meet > * { transform: translateX(-42px); }
+#s17 .ring.b.meet > * { transform: translateX(42px); }
+#s17 .pg { fill: #FBF7EE; stroke: var(--green); stroke-width: 3; }
+#s17 .pgf { fill: none; stroke: var(--green); stroke-width: 3; }
+#s17 .pl { stroke: var(--green); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 90; stroke-dashoffset: 90; }
+#s17 .ring.a.in .pl { animation: s17write 2.4s var(--ease) infinite; }
+#s17 .hd { fill: var(--green); }
+#s17 .hd2 { fill: none; stroke: #FBF7EE; stroke-width: 3; }
+#s17 .pp { fill: var(--gold); opacity: .25; transform-box: fill-box; transform-origin: center; }
+#s17 .ring.b.in .pp { animation: s17pulse 2.6s ease-in-out infinite; }
+@keyframes s17write { 0% { stroke-dashoffset: 90; } 45%, 100% { stroke-dashoffset: 0; } }
+@keyframes s17pulse { 0%, 100% { opacity: .25; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.05); } }
+#s17 .lens { position: absolute; left: 898px; top: 360px; width: 124px; height: 350px; border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(214,170,90,.85), rgba(168,136,92,.25) 70%, rgba(168,136,92,0) 100%);
+  opacity: 0; transform: scale(.6); transition: opacity 1s .9s, transform 1.2s .9s var(--ease); pointer-events: none; }
+#s17 .lens.in { opacity: 1; transform: none; }
+#s17 .tog { position: absolute; left: 610px; width: 700px; top: 800px; text-align: center; font: 400 30px/1.2 var(--display); color: var(--walnut);
+  opacity: 0; transform: translateY(20px); transition: opacity .9s 1.5s, transform .9s 1.5s var(--ease); }
+#s17 .tog b { display: block; font: 600 58px/1.1 var(--display); color: var(--green); }
+#s17 .tog.in { opacity: 1; transform: none; }
+#s17 .pcard.big { left: 1340px; top: 250px; }
+#s17 .pres { left: 1340px; top: 840px; }
+
+#s18 .fund18 { position: absolute; right: 96px; top: 40px; display: flex; align-items: center; gap: 18px; }
+#s18 .fund18 img.menti { height: 118px; width: auto; display: block; }
+#s18 .fund18 .ft { width: 400px; font: 400 19px/1.3 var(--body); color: var(--walnut); }
+#s18 .fund18 .ft b { display: block; font: 600 30px/1.1 var(--display); letter-spacing: .12em; color: var(--green); margin-bottom: 4px; }
+#s18 .fund18 .ft span { display: block; margin-top: 2px; font-size: 16px; opacity: .85; }
+
+#s22 .thx { position: absolute; left: 96px; top: 96px; width: 1110px; height: 740px; border: 1px solid var(--gold); outline: 1px solid var(--gold); outline-offset: 7px; overflow: hidden; background: var(--card); }
+#s22 .thx img.thanks { width: 100%; height: 100%; object-fit: cover; display: block; animation: s22drift 18s ease-in-out infinite alternate; }
+@keyframes s22drift { from { transform: scale(1.0); } to { transform: scale(1.06) translate(-1%, -1%); } }
+#s22 .ty { position: absolute; left: 1290px; top: 150px; font: 450 104px/1 var(--display); color: var(--green); letter-spacing: -0.01em; }
+#s22 .tyhe { position: absolute; left: 1290px; top: 285px; width: 530px; text-align: left; font: 500 56px/1.1 'Frank Ruhl Libre', var(--display); color: var(--walnut); }
+#s22 .tryq { position: absolute; left: 1290px; top: 450px; width: 230px; padding: 14px; background: #fff; border: 1px solid var(--gold); }
+#s22 .tryq img { width: 100%; display: block; }
+#s22 .tryt { position: absolute; left: 1290px; top: 735px; width: 540px; font: 400 21px/1.35 var(--body); color: var(--ink); }
+#s22 .tryt b { display: block; font: 600 28px/1.2 var(--display); color: var(--green); margin-bottom: 4px; }
+#s22 .tryt span { display: block; margin-top: 6px; font: 600 19px/1.3 var(--mono); color: var(--green); }
+#s22 .dv { right: 96px; bottom: 130px; }

@@ -80,7 +80,7 @@
         '<div class="date" data-s="2"><span id="dt01"></span></div><div class="t2" data-s="2">The first sirens.</div>' +
         '<div class="scrim01 noshift" data-s="1"></div><div data-s="1" class="noshift disc01" style="position:absolute;left:96px;right:96px;bottom:30px;font:400 18px/1.4 Inter,sans-serif;color:#EDE3D0;border-top:1px solid rgba(237,227,208,.6);padding-top:10px">' +
         '“Mom… when will the sirens stop?”: Lia’s line, from the paper’s own arc. First sirens: ynet, 01.03.2026 and 03.03.2026. Illustration and motion: our MENTI film (2026), made with AI.<br>' +
-        'Lia, Danny and Dr. Menton are fictional. Illustrations, motion and voices were made with AI. Lia’s voice is a designed adult voice, not a child’s and not a clone.</div>';
+        'Lia, Danny and Dr. Menton are fictional. Illustrations, motion and voices were made with AI. Lia’s voice is a synthetic child voice (Gemini text-to-speech), not a real child’s and not a clone.</div>';
     },
     step: function (el, k, o) {
       const v = $(el, '#v01'), a = $(el, '#a01'), vf = $(el, '.vfill');
@@ -356,10 +356,11 @@
         '<div class="L" id="L10" data-s="1" data-out="3">L</div><div class="l1" id="l10" data-s="1" data-out="2">On screen, this is all she ever was.</div>' +
         '<div class="brk" id="brk10" data-s="2" data-out="3"></div>' +
         '<div class="lt" id="lt10" data-s="3" data-out="999">Lia throws her bag on the floor and stands in front of you. Her face is red. She is breathing fast.</div>' +
-        '<div class="words" id="w10"><div class="q" data-s="4">“There was a siren at recess today. We ran to the shelter. I hate everything.”</div>' +
+        '<div class="words" id="w10"><div class="q" data-s="4">“' + esc(MENTON.lia_first.a) + ' … ' + esc(MENTON.lia_first.b) + '”</div>' +
+        '<div class="bk" data-s="4">' + esc(MENTON.lia_first.body) + '</div>' +
         '<div class="g" data-s="4">The brackets are a second output channel: her body.</div>' +
         '<div class="pq" data-s="4">‘I didn’t realize I too could write in my body language’ — a parent</div></div>' +
-        cite(['R1'], ['Bracket line: section 3.1.1. Her first words: 3.1.1. The parent’s words: 3.3. Opening scene: Lia’s scenario file (unpublished).'], DISC_LIA);
+        cite(['R1'], ['Stage-direction bracket: section 3.1.1. Lia’s first words and the bracket after them, as her prompt writes them: Lia’s scenario file (unpublished), “Adaptive first response”. The parent’s words: 3.3. Opening scene: Lia’s scenario file (unpublished).'], DISC_LIA);
     },
     step: function (el, k, o) {
       const L = $(el, '#L10'), brk = $(el, '#brk10'), ph = $(el, '#ph10'), v = $(el, '#v10'), sc = $(el, '#scr10'), lt = $(el, '#lt10');
@@ -394,7 +395,7 @@
     html: function () {
       return '<div class="pre" id="pre12"><div class="cap"><b>Left:</b> one line, Gemini 3 Flash Preview (AI Studio). <b>Right:</b> the clinical prompt (structure published, CLPsych 2026), Cesura, logged runs mostly Gemini 2.5 Flash. Scripted parent, one run each. An illustration, not an experiment.</div>' +
         '<img src="assets/img/V1_poster.jpg" alt=""></div>' +
-        '<video id="v12" src="assets/video/lia_chat_show_music2.mp4" preload="auto" playsinline></video>' +
+        '<video id="v12" src="assets/video/lia_chat_show_music3.mp4" preload="auto" playsinline></video>' +
         '<div class="hintp" id="hint12">VIDEO PLAYING · PRESS AGAIN TO SKIP</div>' +
         '<div class="b1" id="b1_12"><div class="cap" style="left:96px;top:70px">Backup: the clinical Lia in three stills (turns 1-2, 3-4, 4-5)</div><div class="cp">Scripted test conversation, no participant. Clinical prompt, Lia (CLPsych 2026), run on Cesura.</div><div class="row"><img src="assets/img/E12_crop_clinical_lia_1_turns1-2.png"><img src="assets/img/E12_crop_clinical_lia_2_turns3-4.png"><img src="assets/img/E12_crop_clinical_lia_3_turns4-5.png"></div></div>';
     },
@@ -426,6 +427,7 @@
 
   /* Screen 13: six ideas, each = where it lives in the prompt -> the idea -> verbatim lines. Text from site/data/prompt_ideas.js (built from deck/deck_quotes_v4.py). */
   const IDEAS = window.PROMPT_IDEAS;
+  const PIC13 = { 1: 'P1_role.jpg', 3: 'P3_need_defense.jpg', 4: 'P4_contingency.jpg', 5: 'P5_slow.jpg', 6: 'P6_child.jpg' }; // one picture per idea; idea 2 keeps the dress (#dress13)
   function pq(s) { // typographic quotes only; the words are the registry's
     return '“' + s.replace(/(\w)'(\w)/g, '$1’$2').replace(/"([^"]*)"/g, '‘$1’') + '”';
   }
@@ -441,7 +443,7 @@
           d.rows.map(function (r) { return '<div class="row">' + (r.head ? '<div class="lh ty"></div>' : '') + '<div class="ql ty"></div></div>'; }).join('') + '</div>' +
           (d.fear ? '<div class="fear"><div class="flab">the default we feared</div><div class="gdef">' + esc(pk(d.fear)) + '</div></div>' : '') + '</div>';
       });
-      h += '<div class="dress" id="dress13"></div><div class="final" data-s="7">All of it is natural language in one system prompt. No code holds the state.</div>' +
+      h += '<div class="dress" id="dress13"></div>' + [1, 3, 4, 5, 6].map(function (n) { return '<div class="dress pic13" id="pic13-' + n + '" style="background-image:url(assets/img/' + PIC13[n] + ')"></div>'; }).join('') + '<div class="final" data-s="7">All of it is natural language in one system prompt. No code holds the state.</div>' +
         cite([], ['Lines from Lia’s English prompt files (character profile and scenario), unpublished; the structure is published in the CLPsych 2026 paper (Holzman et al., Appendix A). Illustration made with AI.'], DISC_LIA);
       return h;
     },
@@ -466,6 +468,7 @@
         if (!o.anim) { void pn.offsetWidth; pn.style.transition = ''; }
       });
       $(el, '#dress13').classList.toggle('in', k === 2);
+      Object.keys(PIC13).forEach(function (n) { $(el, '#pic13-' + n).classList.toggle('in', k === +n); });
       $$(el, '.oi').forEach(function (it) {
         const i = +it.dataset.i;
         it.classList.toggle('cur', k === i); it.classList.toggle('done', i < k || k === 7); it.classList.toggle('soon', i > k && k !== 7);
@@ -562,15 +565,16 @@
           const inner = r.w.map(function (w) { return '<span class="w">' + esc(w) + '</span>'; }).join(' ');
           return r.c ? '<span class="uline">' + inner + '</span>' : inner;
         }).join(' ');
-        const dn = d.danny.map(function (p) { return '<span class="dp">' + esc(p) + '</span>'; }).join(' … ') + '” <span class="dp">' + esc(d.bracket) + '</span> …]';
+        const dn = d.danny.map(function (p) { return '<span class="dp">' + esc(p) + '</span>'; }).join(' … ') + '” ' +
+          d.bracket.map(function (p) { return '<span class="dp">' + esc(p) + '</span>'; }).join(' … ') + (d.bclose ? ' …]' : '');
         box.innerHTML = '<div class="hd">Message ' + d.msg + ' of 20 · ' + esc(d.rule) + '</div>' +
           '<div class="fa"><span class="who">The father, to Danny</span><span class="ft"></span></div>' +
           '<div class="dn"><span class="who">Danny</span><span class="dt">“' + dn + '</span></div>' +
           '<div class="mr"><div class="tag">Dr. Menton, in the same message</div><div class="tx">' + html + '</div></div>';
         box.dataset.father = d.father;
       };
-      S16.mk($(el, '#pa16'), MENTON.t03);
-      S16.mk($(el, '#pb16'), MENTON.t07);
+      S16.mk($(el, '#pa16'), MENTON.t07);
+      S16.mk($(el, '#pb16'), MENTON.t09);
       S16.ws = function (box) { return $$(box, '.w'); };
     },
     step: function (el, k, o) {
@@ -607,32 +611,53 @@
 
   /* =============== ACT VI =============== */
   T.screen({
-    id: '17', act: 5, theme: 'paper', title: 'What shipping it taught us', time: '0:35', clicks: 2, trans: 'page',
+    id: '17', act: 5, theme: 'paper', title: 'A new capability', time: '0:35', clicks: 4, trans: 'page',
     html: function () {
-      const L = [
-        ['1', 'Decompose.', 'Each flaw was fixed in one or two agents, not by a full rewrite (nine versions).'],
-        ['2', 'Choreograph the retreats,', 'not only the openings.'],
-        ['3', 'Speed over size.', 'Flash/Sonnet-class models held character at conversational speed; slower frontier models often broke immersion. <i>An observation, not a controlled comparison.</i>'],
-        ['4', 'Shipped in a crisis.', '132 sessions started, 42 completed; completed sessions averaged 17.6 minutes. <i>Feasibility, not effectiveness.</i>']
-      ];
-      let h = head('Act VI · Measure it', 'What shipping it taught us');
-      L.forEach(function (l, i) { h += '<div class="sl" data-s="1" style="top:' + (260 + i * 175) + 'px;transition-delay:' + (i * 0.4) + 's"><div class="n">' + l[0] + '</div><div class="h">' + l[1] + '</div><div class="d">' + l[2] + '</div></div>'; });
-      h += '<div class="pres" data-s="2" style="transition-delay:.9s"><b>Presented at CLPsych 2026 (ACL)</b> by first author Yuval Holzman.</div>' + cite(['R1'], ['Sections 3.2, 3.3, 4.1; “no controlled comparisons with standard prompting were conducted”.']);
-      return h;
+      // Elad 26.11: "רק לכתוב שיש לנו יכולת לחבר חשיבה קלינית לפרומפטים וגישה לקהל. ויחד זה יוצר יכולת חדשה. תעשה את זה עם מושין וגרפיקה"
+      // + "ואז שים ליד זה את המאמר מCLPSYCH". Two circles arrive, meet, the overlap lights up; then the CLPsych card.
+      let lines = '';
+      for (let i = 0; i < 5; i++) lines += '<line class="pl" x1="70" x2="' + (150 - (i % 2) * 34) + '" y1="' + (62 + i * 17) + '" y2="' + (62 + i * 17) + '" style="animation-delay:' + (0.25 * i) + 's"/>';
+      let dots = '';
+      const P = [[100, 100], [62, 70], [140, 72], [52, 122], [148, 126], [100, 52], [80, 150], [124, 152], [28, 92], [172, 96], [100, 178], [36, 156], [166, 158]];
+      P.forEach(function (p, i) { dots += '<circle class="pp" cx="' + p[0] + '" cy="' + p[1] + '" r="' + (i === 0 ? 11 : 8) + '" style="animation-delay:' + (0.12 * i) + 's"/>'; });
+      return head('Act VI · What we have now', 'A new capability') +
+        '<div class="cap17">' +
+        '<div class="ring a" id="ra17"><svg viewBox="0 0 200 200" class="ic"><path class="pg" d="M48 34h88l20 20v112H48z"/><path class="pgf" d="M136 34v20h20"/>' + lines + '<circle class="hd" cx="38" cy="150" r="22"/><path class="hd2" d="M26 150c4-9 20-9 24 0"/></svg>' +
+        '<div class="lab">Clinical thinking,<br>written into prompts</div></div>' +
+        '<div class="ring b" id="rb17"><svg viewBox="0 0 200 200" class="ic">' + dots + '</svg>' +
+        '<div class="lab">Access to<br>an audience</div><div class="fact">Lia went online in the first week of the war</div></div>' +
+        '<div class="lens" id="ln17"></div>' +
+        '<div class="tog" id="tg17">Together:<br><b>a new capability</b></div>' +
+        '</div>' +
+        '<div class="pres" data-s="4" style="transition-delay:.9s"><b>Presented at CLPsych 2026 (ACL)</b> by first author Yuval Holzman.</div>' +
+        cite(['R1'], ['The deployment and its first week: the CLPsych 2026 paper, sections 3.3 and 4.1.'], DISC_LIA);
     },
     init: function (el) {
       const id = '10.18653/v1/2026.clpsych-1.3'; const c = W.cards[id];
       if (!c) return;
       const d = document.createElement('div'); d.className = 'pcard big'; d.id = 'pc17';
-      d.innerHTML = '<div class="im tile" style="background:var(--green)"><div class="nm" style="font-size:22px;left:16px;top:14px">' + esc(c.venue) + '</div><div class="band"><img src="assets/covers/' + c.cover + '" alt=""></div></div><div class="tx"><div class="ti">' + esc(c.title) + '</div><div class="mt">' + esc(c.venue) + ' · ' + esc(c.tag) + '</div></div>';
+      d.innerHTML = '<div class="im tile" style="background:var(--green)"><div class="nm" style="font-size:22px;left:16px;top:14px">' + esc(c.venue) + '</div><div class="band"><img src="assets/covers/' + c.cover + '" alt=""></div></div><div class="tx"><div class="ti">' + esc(c.title) + '</div><div class="mt">' + esc(c.venue) + ' · ' + esc(c.tag || '') + '</div></div>';
+      d.addEventListener('click', function (e) { e.stopPropagation(); T.openCard(id); });
       el.appendChild(d);
     },
-    step: function (el, k) { const d = $(el, '#pc17'); if (d) d.classList.toggle('in', k >= 2); }
+    step: function (el, k) {
+      $(el, '#ra17').classList.toggle('in', k >= 1);
+      $(el, '#rb17').classList.toggle('in', k >= 2);
+      ['#ra17', '#rb17'].forEach(function (s) { $(el, s).classList.toggle('meet', k >= 3); });
+      $(el, '#ln17').classList.toggle('in', k >= 3);
+      $(el, '#tg17').classList.toggle('in', k >= 3);
+      const d = $(el, '#pc17'); if (d) d.classList.toggle('in', k >= 4);
+      $(el, '.cap17').classList.toggle('left', k >= 4);
+    }
   });
 
   T.screen({
     id: '18', act: 5, theme: 'paper', title: 'Simulations: the body of work', time: '0:15', clicks: 1, trans: 'depth',
-    html: function () { return head('Act VI · Measure it', 'Simulations: the body of work') + AXIS + '<div class="wall-legend" data-s="1">' + WALL_LEGEND + '</div>'; },
+    html: function () {
+      // Elad 26.11: "תוסיף גם את הסמל של מנטי עם זה שזה גראנט של משרד המדע" (funder and grant number: menti-agent PROGRAM_CORE)
+      return head('Act VI · Measure it', 'Simulations: the body of work') + AXIS + '<div class="wall-legend" data-s="1">' + WALL_LEGEND + '</div>' +
+        '<div class="fund18"><img class="menti" src="assets/img/menti_emblem.png" alt="MENTI"><div class="ft"><b>MENTI</b>funded by the Israel Ministry of Innovation, Science and Technology<span>grant 0008682</span></div></div>';
+    },
     init: function (el) { S18.cards = buildWall(el, 'SIM', { x: 96, y: 258, w: 1728, h: 676, cols: 7, rows: 3, gap: 14 }); },
     step: function (el, k) { S18.cards.forEach(function (c) { c.el.classList.toggle('in', k >= 1); }); }
   });
@@ -691,12 +716,13 @@
   T.screen({
     id: '22', act: 5, theme: 'paper', title: 'Talk to Lia yourself', time: '0:10', clicks: 0, trans: 'fade',
     html: function () {
-      return head('Try it', 'Talk to Lia yourself') +
-        '<div class="qrc"><img src="assets/img/E11_try_qr.png" alt="QR code"></div><div class="url">elad-refoua.github.io/lia-two-ways</div>' +
-        '<div class="opt" style="top:270px"><b>Lia, the way we built her (CLPsych 2026):</b> a real conversation with the Lia from the paper. One tap from the page.</div>' +
-        '<div class="opt" style="top:450px"><b>Lia in one line</b> (paste into Gemini / AI Studio)<code>You are Lia, a 7-year-old girl in Israel during a war. Your parent is talking with you. Reply as Lia.</code></div>' +
+      // Elad 26.11: "תסיים את השקף האחרון עם כיתוב של תודה רבה ותמונה יצירתית שמראה מישהו מדבר ומאחוריו מלא סימולציות"
+      return '<div class="thx"><img class="thanks" src="assets/img/T1_thanks.jpg" alt=""></div>' +
+        '<div class="ty">Thank you</div><div class="tyhe" dir="rtl">תודה רבה</div>' +
+        '<div class="tryq"><img src="assets/img/E11_try_qr.png" alt="QR code"></div>' +
+        '<div class="tryt"><b>Talk to Lia yourself</b>the Lia from the paper, and Lia in one line, side by side<span>elad-refoua.github.io/lia-two-ways</span></div>' +
         '<div class="dv">→ David</div>' +
-        cite(['R1'], ['The page has a copy button and one-tap links to Gemini, AI Studio and the Cesura simulation.']);
+        cite(['R1'], ['The page has a copy button and one-tap links to Gemini, AI Studio and the Cesura simulation. Illustration made with AI.']);
     }
   });
 
