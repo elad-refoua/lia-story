@@ -30,7 +30,7 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 100%; height: 100%; overflow: hidden; background: var(--paper); transition: background-color 1.2s var(--ease); }
-body { font-family: var(--body); color: var(--ink); cursor: default; }
+body { font-family: var(--body); color: var(--ink); cursor: default; position: fixed; inset: 0; } /* a phone must not widen the page to the 1920 px stage */
 body.theme-night { background: var(--night); }
 body.hide-cursor, body.hide-cursor * { cursor: none !important; }
 

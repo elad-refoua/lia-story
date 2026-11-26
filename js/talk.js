@@ -286,6 +286,15 @@
     else if (lk === 'k') { const d = ALL()[cur]; if (d.pause) d.pause(d.el); }
   });
 
+  /* ----- phone (26.11, the public copy): a tap on the left third goes back, anywhere else goes on.
+     Touch only, so the clicker, the keys and a mouse click on the laptop are unchanged; a tap on a paper card opens it. ----- */
+  document.addEventListener('pointerup', function (e) {
+    if (e.pointerType !== 'touch') return;
+    if (overlay.classList.contains('on') || e.target.closest('#overlay, #map, .pcard, a, button')) return;
+    if (blackEl.classList.contains('on')) { blackEl.classList.remove('on'); return; }
+    if (e.clientX < window.innerWidth / 3) prev(); else next();
+  });
+
   let idleT;
   function wake() { document.body.classList.remove('hide-cursor'); clearTimeout(idleT); idleT = setTimeout(function () { document.body.classList.add('hide-cursor'); }, 3000); }
   document.addEventListener('mousemove', wake);
