@@ -424,47 +424,52 @@
   });
   const S12 = { last: 0 };
 
-  const PROMPTS = [
-    { l: ['“You are Lia, a 7-year-old girl. The user is your parent. You are not the parent — iron rule.”'], g: 'A hard role invariant, stated twice: the first thing users try to break' },
-    { l: ['“Layer 3 — Inner (the engine underneath)”', '“If the costume party can just disappear, what else can disappear? Mom? Dad? Me?”'], g: 'A hidden state in three layers. The top one is what she says; the bottom one drives it and surfaces late.', dress: true },
-    { l: ['“Anger as a response to a good intervention — must happen at least once.”', '“… because being seen is itself frightening.”'], g: 'A correct move by the parent must sometimes raise resistance' },
-    { l: ['“Never advance more than one step per interaction, even if the parent was perfect.”', '“Iron rule: never repeat the same retreat mechanism twice in a row.”'], g: 'A rate limit on state change, plus forced setbacks that never repeat' },
-    { l: ['“When the parent evades or gives an empty promise — Lia stops asking: “Never mind, it doesn’t matter.””'], g: 'A branch on the user’s move: an empty promise closes the channel' },
-    { l: ['“a 7-year-old doesn’t say “Now I understand that my anger is actually hiding fear””', '“Lia does not analyze herself — the parent has to do that work”'], g: 'The default failure, named and forbidden. The insight is the human’s job.', def: true }
-  ];
+  /* Screen 13: six ideas, each = where it lives in the prompt -> the idea -> verbatim lines. Text from site/data/prompt_ideas.js (built from deck/deck_quotes_v4.py). */
+  const IDEAS = window.PROMPT_IDEAS;
+  function pq(s) { // typographic quotes only; the words are the registry's
+    return '“' + s.replace(/(\w)'(\w)/g, '$1’$2').replace(/"([^"]*)"/g, '‘$1’') + '”';
+  }
+  function pk(s) { return s.replace(/(\w)'(\w)/g, '$1’$2'); }
   T.screen({
-    id: '13', act: 3, theme: 'paper', title: 'Inside the prompt', time: '1:00', clicks: 7, trans: 'zoom',
+    id: '13', act: 3, theme: 'paper', title: 'Inside the prompt', time: '1:15', clicks: 7, trans: 'zoom',
     html: function () {
-      let h = head('Act IV · Lia', 'Inside the prompt') + '<div class="sub">Lines from Lia’s system prompt, and what you would call them</div>';
-      PROMPTS.forEach(function (p, i) {
-        h += '<div class="pair' + (p.dress ? ' wide' : '') + '" id="pr' + (i + 1) + '" style="opacity:0">' + p.l.map(function (x) { return '<div class="ql">' + esc(x) + '</div>'; }).join('') + '<div class="gl">' + esc(p.g) + '</div>' + (p.def ? '<div class="gdef">I think my anger is hiding my real feeling, which is fear.</div>' : '') + '</div>';
+      let h = head('Act IV · Lia', 'Inside the prompt') + '<div class="sub">Six ideas in Lia’s system prompt, each with lines from it</div>';
+      h += '<div class="outline" id="ol13">' + IDEAS.map(function (d) { return '<div class="oi soon" data-i="' + d.n + '"><i>' + d.n + '</i><span>' + esc(d.label) + '</span></div>'; }).join('') + '</div><div class="vrule13"></div>';
+      IDEAS.forEach(function (d) {
+        h += '<div class="ip' + (d.dress ? ' wide' : '') + '" id="ip' + d.n + '" style="opacity:0"><div class="where">' + esc(d.where) + '</div><div class="iname">' + esc(d.label) + '</div><div class="isent">' + esc(d.sentence) + '</div>' +
+          '<div class="from">From the prompt</div><div class="lines">' +
+          d.rows.map(function (r) { return '<div class="row">' + (r.head ? '<div class="lh ty"></div>' : '') + '<div class="ql ty"></div></div>'; }).join('') + '</div>' +
+          (d.fear ? '<div class="fear"><div class="flab">the default we feared</div><div class="gdef">' + esc(pk(d.fear)) + '</div></div>' : '') + '</div>';
       });
       h += '<div class="dress" id="dress13"></div><div class="final" data-s="7">All of it is natural language in one system prompt. No code holds the state.</div>' +
-        '<div class="prog">' + PROMPTS.map(function () { return '<i></i>'; }).join('') + '</div>' +
         cite([], ['Lines from Lia’s English prompt files (character profile and scenario), unpublished; the structure is published in the CLPsych 2026 paper (Holzman et al., Appendix A). Illustration made with AI.'], DISC_LIA);
       return h;
     },
     step: function (el, k, o) {
-      PROMPTS.forEach(function (p, i) {
-        const pair = $(el, '#pr' + (i + 1)), gl = $(pair, '.gl'), gd = $(pair, '.gdef');
-        pair.classList.remove('leave');
-        pair.style.transition = o.anim ? '' : 'none';
-        const qs = $$(pair, '.ql');
-        if (k === i + 1) {
-          pair.style.opacity = 1; pair.style.transform = 'none';
+      IDEAS.forEach(function (d) {
+        const pn = $(el, '#ip' + d.n), fe = $(pn, '.fear'), gd = fe ? $(fe, '.gdef') : null;
+        pn.style.transition = o.anim ? '' : 'none';
+        const tys = $$(pn, '.ty'), tx = [];
+        d.rows.forEach(function (r) { if (r.head) tx.push(pk(r.head)); tx.push(pq(r.text)); });
+        if (k === d.n) {
+          pn.style.opacity = 1; pn.style.transform = 'none';
+          if (fe) fe.classList.remove('in');
           if (o.anim) {
-            let t = 0.2;
-            qs.forEach(function (n, j) { const txt = p.l[j]; o.fx.words(n, txt, 0.075, t); t += txt.split(' ').length * 0.075 + 0.25; });
-            gl.classList.remove('in'); if (gd) gd.classList.remove('in');
-            o.fx.later(t * 1000 + 500, function () { gl.classList.add('in'); });
-            if (gd) o.fx.later(t * 1000 + 1500, function () { gd.classList.add('in'); });
-          } else { qs.forEach(function (n, j) { n.textContent = p.l[j]; }); gl.classList.add('in'); if (gd) gd.classList.add('in'); }
-        } else if (k > i + 1) { pair.style.opacity = 0; pair.style.transform = 'translateY(-40px)'; gl.classList.remove('in'); if (gd) gd.classList.remove('in'); }
-        else { pair.style.opacity = 0; pair.style.transform = 'none'; gl.classList.remove('in'); if (gd) gd.classList.remove('in'); }
-        if (!o.anim) { void pair.offsetWidth; pair.style.transition = ''; }
+            let t = 0.35;
+            tys.forEach(function (n, j) { o.fx.words(n, tx[j], 0.06, t); t += tx[j].split(' ').length * 0.06 + 0.3; });
+            if (fe) o.fx.later(t * 1000 + 300, function () { fe.classList.add('in'); });
+          } else { tys.forEach(function (n, j) { n.textContent = tx[j]; }); if (fe) fe.classList.add('in'); }
+        } else {
+          pn.style.opacity = 0; pn.style.transform = k > d.n ? 'translateY(-40px)' : 'none';
+          if (fe) fe.classList.remove('in');
+        }
+        if (!o.anim) { void pn.offsetWidth; pn.style.transition = ''; }
       });
       $(el, '#dress13').classList.toggle('in', k === 2);
-      $$(el, '.prog i').forEach(function (d, i) { d.classList.toggle('on', i < Math.min(k, 6) || k === 7); });
+      $$(el, '.oi').forEach(function (it) {
+        const i = +it.dataset.i;
+        it.classList.toggle('cur', k === i); it.classList.toggle('done', i < k || k === 7); it.classList.toggle('soon', i > k && k !== 7);
+      });
     }
   });
 
@@ -533,18 +538,19 @@
   });
 
   T.screen({
-    id: '16', act: 4, theme: 'paper', title: 'Dr. Menton at work', time: '0:45', clicks: 2, trans: 'rise',
+    id: '16', act: 4, theme: 'paper', title: 'Dr. Menton at work', time: '1:00', clicks: 2, trans: 'rise',
     html: function () {
       return head('Act V · A third mind', 'Dr. Menton at work') +
-        '<div class="sub">A demo run of the Danny prompt in AI Studio, Gemini 3 Flash Preview. The father is scripted.</div>' +
+        '<div class="sub">A demo run of the Danny prompt in AI Studio, Gemini 3 Flash Preview. The father’s lines are scripted; Danny and Dr. Menton are the model.</div>' +
         '<div class="clipbox"><img src="assets/img/E05_danny_poster.jpg" alt=""><video id="v16" src="assets/video/E05_danny_4-8s.mp4" muted playsinline preload="auto"></video></div>' +
         '<div class="dcap">Danny, 14: six months without contact with his parent. Anger outside, fear of another disappointment, longing inside.</div>' +
         '<div class="col"><div class="pair" id="pa16"></div><div class="pair" id="pb16"></div></div>' +
         cite(['R13'], ['Danny is Study 1 of this paper, which ran Claude Sonnet 3.5 V2; this is one demo run of two, replies verbatim: an illustration, not a measurement. Painting and clip: our MENTI film (2026), made with AI.'], DISC_ALL);
     },
     init: function (el) {
-      S16.mk = function (box, d, tag, clause) {
-        const ci = d.reply.indexOf(clause); if (ci < 0) throw new Error('clause not found');
+      // one exchange = the father to Danny -> Danny -> Dr. Menton in the same message (all words from site/data/menton.js)
+      S16.mk = function (box, d) {
+        const clause = d.clause, ci = d.reply.indexOf(clause); if (ci < 0) throw new Error('clause not found');
         const ce = ci + clause.length; let pos = 0; const runs = [];
         d.reply.split(' ').forEach(function (w) {
           const s = pos, e = pos + w.length; pos = e + 1;
@@ -556,25 +562,34 @@
           const inner = r.w.map(function (w) { return '<span class="w">' + esc(w) + '</span>'; }).join(' ');
           return r.c ? '<span class="uline">' + inner + '</span>' : inner;
         }).join(' ');
-        box.innerHTML = '<div class="fa"><span class="who">The father (scripted)</span><span class="ft"></span></div><div class="mr"><div class="tag">Dr. Menton · ' + tag + '</div><div class="tx">' + html + '</div></div>';
+        const dn = d.danny.map(function (p) { return '<span class="dp">' + esc(p) + '</span>'; }).join(' … ') + '” <span class="dp">' + esc(d.bracket) + '</span> …]';
+        box.innerHTML = '<div class="hd">Message ' + d.msg + ' of 20 · ' + esc(d.rule) + '</div>' +
+          '<div class="fa"><span class="who">The father, to Danny</span><span class="ft"></span></div>' +
+          '<div class="dn"><span class="who">Danny</span><span class="dt">“' + dn + '</span></div>' +
+          '<div class="mr"><div class="tag">Dr. Menton, in the same message</div><div class="tx">' + html + '</div></div>';
         box.dataset.father = d.father;
       };
-      S16.mk($(el, '#pa16'), MENTON.t07, 'Message 8 of 20 · the father first, then Danny', 'I can see how much effort it’s taking you to resist the urge to "fix" this and simply be present');
-      S16.mk($(el, '#pb16'), MENTON.t09, 'Message 10 of 20 · him, Danny, and what his presence makes possible', 'I can feel the weight of your persistence as you sit with his rejection');
+      S16.mk($(el, '#pa16'), MENTON.t03);
+      S16.mk($(el, '#pb16'), MENTON.t07);
       S16.ws = function (box) { return $$(box, '.w'); };
     },
     step: function (el, k, o) {
       const v = $(el, '#v16'), pa = $(el, '#pa16'), pb = $(el, '#pb16');
       if (k === 0) { try { v.currentTime = 0; } catch (e) {} if (o.anim) o.fx.later(500, function () { playV(v, o.fx); }); else stopV(v, true); }
       const show = function (box, anim) {
-        const ft = $(box, '.ft'), ws = S16.ws(box), ul = $(box, '.uline');
+        const ft = $(box, '.ft'), dn = $(box, '.dn'), mr = $(box, '.mr'), ws = S16.ws(box), ul = $(box, '.uline');
         box.style.display = 'block'; box.classList.remove('gone'); box.style.opacity = 1;
         ws.forEach(function (w) { w.style.opacity = 0; }); ul.classList.remove('go'); ft.textContent = '';
+        dn.classList.remove('in'); mr.classList.remove('in');
         const f = '“' + box.dataset.father + '”';
-        if (!anim) { ft.textContent = f; ws.forEach(function (w) { w.style.opacity = 1; }); ul.classList.add('go'); return; }
-        o.fx.type(ft, f, 36, function () {
-          let i = 0; const iv = setInterval(function () { if (i < ws.length) { ws[i].style.transition = 'opacity .3s'; ws[i].style.opacity = 1; i++; } else { clearInterval(iv); ul.classList.add('go'); } }, 55);
-          o.fx.later(0, function () {}); T.S.iv16 = iv;
+        if (!anim) { ft.textContent = f; dn.classList.add('in'); mr.classList.add('in'); ws.forEach(function (w) { w.style.opacity = 1; }); ul.classList.add('go'); return; }
+        o.fx.type(ft, f, 44, function () {
+          dn.classList.add('in');
+          o.fx.later(1100, function () {
+            mr.classList.add('in');
+            let i = 0; const iv = setInterval(function () { if (i < ws.length) { ws[i].style.transition = 'opacity .3s'; ws[i].style.opacity = 1; i++; } else { clearInterval(iv); ul.classList.add('go'); } }, 45);
+            T.S.iv16 = iv;
+          });
         });
       };
       const hide = function (box) { box.style.opacity = 0; box.style.display = 'none'; };
