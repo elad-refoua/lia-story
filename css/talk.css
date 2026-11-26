@@ -547,9 +547,10 @@ body.hide-cursor, body.hide-cursor * { cursor: none !important; }
 #s17 .pcard.big { left: 1340px; top: 250px; }
 #s17 .pres { left: 1340px; top: 840px; }
 
-#s18 .fund18 { position: absolute; right: 96px; top: 40px; display: flex; align-items: center; gap: 18px; }
-#s18 .fund18 img.menti { height: 118px; width: auto; display: block; }
-#s18 .fund18 .ft { width: 400px; font: 400 19px/1.3 var(--body); color: var(--walnut); }
+#s18 .fund18 { position: absolute; left: 1341px; top: 718px; width: 483px; height: 216px; box-sizing: border-box; padding: 16px 20px;
+  display: flex; align-items: center; gap: 16px; background: var(--card); border: 1px solid var(--gold); }
+#s18 .fund18 img.menti { height: 150px; width: auto; display: block; flex: none; }
+#s18 .fund18 .ft { font: 400 17px/1.3 var(--body); color: var(--walnut); }
 #s18 .fund18 .ft b { display: block; font: 600 30px/1.1 var(--display); letter-spacing: .12em; color: var(--green); margin-bottom: 4px; }
 #s18 .fund18 .ft span { display: block; margin-top: 2px; font-size: 16px; opacity: .85; }
 

@@ -656,7 +656,9 @@
     html: function () {
       // Elad 26.11: "תוסיף גם את הסמל של מנטי עם זה שזה גראנט של משרד המדע" (funder and grant number: menti-agent PROGRAM_CORE)
       return head('Act VI · Measure it', 'Simulations: the body of work') + AXIS + '<div class="wall-legend" data-s="1">' + WALL_LEGEND + '</div>' +
-        '<div class="fund18"><img class="menti" src="assets/img/menti_emblem.png" alt="MENTI"><div class="ft"><b>MENTI</b>funded by the Israel Ministry of Innovation, Science and Technology<span>grant 0008682</span></div></div>';
+        // Elad 26.11 (second word): not at the top "as if all the papers come from it" - one of the outputs, inside the wall:
+        // a tile in the two free slots after the last card (row 3 of the 7x3 grid holds 5 cards).
+        '<div class="fund18" data-s="1"><img class="menti" src="assets/img/menti_emblem.png" alt="MENTI"><div class="ft"><b>MENTI</b>our simulation program, funded by the Israel Ministry of Innovation, Science and Technology<span>grant 0008682</span></div></div>';
     },
     init: function (el) { S18.cards = buildWall(el, 'SIM', { x: 96, y: 258, w: 1728, h: 676, cols: 7, rows: 3, gap: 14 }); },
     step: function (el, k) { S18.cards.forEach(function (c) { c.el.classList.toggle('in', k >= 1); }); }
